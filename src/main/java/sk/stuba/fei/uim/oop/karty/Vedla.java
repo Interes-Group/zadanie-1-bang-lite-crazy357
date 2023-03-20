@@ -1,4 +1,11 @@
 package sk.stuba.fei.uim.oop.karty;
 
-public class Vedla {
+import sk.stuba.fei.uim.oop.stol.Stol;
+
+public class Vedla extends Karta{
+    private static final String MENO_KARTY = "Vedla!";
+    public Vedla(Stol stol) {
+        super(MENO_KARTY, stol);
+    }
+
 }

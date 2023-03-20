@@ -37,7 +37,7 @@ public class Hrac {
     public ArrayList<Karta> ukazatHracieKarty() {
         ArrayList<Karta> karty = new ArrayList<Karta>();
         for (Karta karta : this.karty) {
-            if (karta.canPlay()) {
+            if (karta.zahrajKartu()) {
                 karty.add(karta);
             }
         }
