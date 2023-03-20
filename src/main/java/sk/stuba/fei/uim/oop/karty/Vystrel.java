@@ -1,5 +1,6 @@
 package sk.stuba.fei.uim.oop.karty;
 
+import sk.stuba.fei.uim.oop.hrac.Hrac;
 import sk.stuba.fei.uim.oop.stol.Stol;
 
 public class Vystrel extends Karta{
@@ -9,5 +10,14 @@ public class Vystrel extends Karta{
         super(NAZOV_KARTY, stol);
     }
 
+    @Override
+    public boolean mozeHrat() {
+        return true;
+    }
 
+    @Override
+    public void zahrajKartu(Hrac hrac) {
+        super.zahrajKartu(hrac);
+        hrac.odstranitZivot();
+    }
 }

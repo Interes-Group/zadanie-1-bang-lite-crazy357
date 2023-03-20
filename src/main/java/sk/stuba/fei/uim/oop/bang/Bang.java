@@ -2,6 +2,7 @@ package sk.stuba.fei.uim.oop.bang;
 
 import sk.stuba.fei.uim.oop.hrac.Hrac;
 import sk.stuba.fei.uim.oop.karty.Karta;
+import sk.stuba.fei.uim.oop.stol.Stol;
 import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 public class Bang {
     private final Hrac[] hraci;
     private int aktualnyHrac;
+    private Stol stol;
 
     public Bang() {
         System.out.println("=== Vitaj v hre BANG! ===");
@@ -23,7 +25,7 @@ public class Bang {
         for (int i = 0; i < pocetHracov; i++) {
             this.hraci[i] = new Hrac(ZKlavesnice.readString("--- Zadaj meno "+ (i+1) +". hraca: ---"));
         }
-
+        this.stol = new Stol(this.hraci);
         this.zacatHru();
     }
 
@@ -50,23 +52,21 @@ public class Bang {
         ArrayList<Karta> hracieKarty = aktivnyHrac.ukazatHracieKarty();
         if (hracieKarty.size() != 0) {
             this.zahrajKartu(hracieKarty, aktivnyHrac);
-        } else {
-            this.odstranitKartu(aktivnyHrac);
         }
     }
 
-    private void odstranitKartu(Hrac aktivnyHrac) {
+    /*private void odstranitKartu(Hrac aktivnyHrac) {
         System.out.println("--- Uz nemas ziadne hratelne karty na ruke! Ktoru kartu chces zahodit? ---");
         ArrayList<Karta> karty = aktivnyHrac.ukazatVsetkyKarty();
         int cisloKarty = vyberKartu(karty, "odstranit");
         karty.get(cisloKarty).odstranitKartu(aktivnyHrac);
-    }
+    }*/
 
     private void zahrajKartu(ArrayList<Karta> hracieKarty, Hrac aktivnyHrac) {
         System.out.println("--- Hracie karty na ruke ---");
         int cisloKarty = vyberKartu(hracieKarty, "zahrat");
         hracieKarty.get(cisloKarty).zahrajKartu(aktivnyHrac);
-    }
+}
 
     private int vyberKartu(ArrayList<Karta> karty, String sloveso) {
         for (int i = 0; i < karty.size(); i++) {

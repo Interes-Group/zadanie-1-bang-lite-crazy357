@@ -8,4 +8,8 @@ public class Vedla extends Karta{
         super(MENO_KARTY, stol);
     }
 
+    @Override
+    public boolean mozeHrat() {
+        return false;
+    }
 }

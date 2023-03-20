@@ -10,9 +10,8 @@ import java.util.Collections;
 
 public class Stol {
 
-    private ArrayList<Karta> balicek;
     public Stol(Hrac[] hraci) {
-        this.balicek = new ArrayList<>();
+        ArrayList<Karta> balicek = new ArrayList<>();
 
         for (int i = 0; i < 30; i++) {
             balicek.add(new Vystrel(this));
@@ -21,7 +20,7 @@ public class Stol {
             balicek.add(new Vedla(this));
         }
 
-        Collections.shuffle(this.balicek);
+        Collections.shuffle(balicek);
         for (Hrac hrac : hraci) {
             ArrayList<Karta> noveKarty = new ArrayList<>();
             for (int i = 0; i < 4; i++) {
