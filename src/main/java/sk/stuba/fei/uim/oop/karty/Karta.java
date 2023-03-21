@@ -17,7 +17,7 @@ public abstract class Karta {
     public abstract boolean mozeHrat();
 
     public void zahrajKartu(Hrac hrac) {
-        System.out.println("--- "+ hrac.getMeno() + " vyber " + this.meno + " kartu zahrat. ---");
+        System.out.println("--- "+ hrac.getMeno() + " zahral " + this.meno + " kartu. ---\n\n");
     }
 
 

@@ -8,7 +8,7 @@ import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 import java.util.ArrayList;
 
 public class Bang {
-    private final Hrac[] hraci;
+    private static Hrac[] hraci;
     private int aktualnyHrac;
     private Stol stol;
 
@@ -84,6 +84,23 @@ public class Bang {
         return cisloKarty;
     }
 
+    public static Hrac vyberHraca() {
+        ArrayList<Hrac> hrajuciHraci = getHrajucichHracov();
+        for (int i = 0; i < hrajuciHraci.size(); i++) {
+            System.out.println("Hrac " + (i+1) + ":" + hrajuciHraci.get(i).getMeno());
+        }
+        int cisloHraca = 0;
+        while (true) {
+            cisloHraca = ZKlavesnice.readInt("--- Vyber cislo hraca, na ktoreho chces pouzit kartu: ---")-1;
+            if (cisloHraca < 0 || cisloHraca > hrajuciHraci.size() - 1) {
+                System.out.println("!!! Zadal si nespravne cislo hraca, skus znova. !!!");
+            } else {
+                break;
+            }
+        }
+        return hrajuciHraci.get(cisloHraca);
+    }
+
     private void inkrementPocitadlo() {
         this.aktualnyHrac++;
         this.aktualnyHrac %= this.hraci.length;
@@ -96,6 +113,15 @@ public class Bang {
             }
         }
         return pocet;
+    }
+    public static ArrayList<Hrac> getHrajucichHracov() {
+        ArrayList<Hrac> zijuciHraci = new ArrayList<>();
+        for (Hrac hrac : hraci) {
+            if (hrac.jeAktivny()) {
+                zijuciHraci.add(hrac);
+            }
+        }
+        return zijuciHraci;
     }
 
     private Hrac getVitaz() {

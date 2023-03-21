@@ -53,4 +53,5 @@ public class Hrac {
     public void odstranitZivot() {
         this.zivoty--;
     }
+
 }

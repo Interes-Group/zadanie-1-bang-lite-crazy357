@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Stol {
+    private ArrayList<Karta> balicek;
 
     public Stol(Hrac[] hraci) {
-        ArrayList<Karta> balicek = new ArrayList<>();
-
+        this.balicek = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
             balicek.add(new Vystrel(this));
         }
@@ -20,13 +20,18 @@ public class Stol {
             balicek.add(new Vedla(this));
         }
 
-        Collections.shuffle(balicek);
+        Collections.shuffle(this.balicek);
         for (Hrac hrac : hraci) {
             ArrayList<Karta> noveKarty = new ArrayList<>();
             for (int i = 0; i < 4; i++) {
                 noveKarty.add(balicek.remove(0));
             }
             hrac.setKarty(noveKarty);
+        }
+
+        System.out.println("karty v balicku:");
+        for (Karta karta : balicek) {
+            System.out.println(karta.getMeno());
         }
     }
 }

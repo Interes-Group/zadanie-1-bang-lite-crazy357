@@ -1,9 +1,10 @@
 package sk.stuba.fei.uim.oop.karty;
 
+import sk.stuba.fei.uim.oop.bang.Bang;
 import sk.stuba.fei.uim.oop.hrac.Hrac;
 import sk.stuba.fei.uim.oop.stol.Stol;
 
-public class Vystrel extends Karta{
+public class Vystrel extends Karta {
     private static final String NAZOV_KARTY = "Bang!";
 
     public Vystrel(Stol stol) {
@@ -18,6 +19,12 @@ public class Vystrel extends Karta{
     @Override
     public void zahrajKartu(Hrac hrac) {
         super.zahrajKartu(hrac);
-        hrac.odstranitZivot();
+
+        Hrac ciel = Bang.vyberHraca();
+
+        System.out.println("Odobral si "+ ciel.getMeno()+"jeden zivot\n\n");
+
+        ciel.odstranitZivot();
+
     }
 }
