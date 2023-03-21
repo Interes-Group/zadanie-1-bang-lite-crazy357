@@ -2,13 +2,14 @@ package sk.stuba.fei.uim.oop.karty;
 
 import sk.stuba.fei.uim.oop.stol.Stol;
 
-public class Dostavnik extends Karta{
-    private static final String NAZOV_KARTY = "Dostavnik";
+public class Indiani extends Karta{
+    private static final String NAZOV_KARTY = "Indiani";
 
-    public Dostavnik(Stol stol) {
+    public Indiani(Stol stol) {
         super(NAZOV_KARTY, stol);
     }
-    public Dostavnik(String meno, Stol stol) {
+
+    public Indiani(String meno, Stol stol) {
         super(meno, stol);
     }
 

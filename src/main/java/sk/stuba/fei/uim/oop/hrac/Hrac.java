@@ -54,4 +54,8 @@ public class Hrac {
         this.zivoty--;
     }
 
+    public void pridatZivot() {
+        this.zivoty++;
+    }
+
 }

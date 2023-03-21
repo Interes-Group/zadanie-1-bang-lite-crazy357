@@ -22,9 +22,8 @@ public class Vystrel extends Karta {
 
         Hrac ciel = Bang.vyberHraca();
 
-        System.out.println("Odobral si "+ ciel.getMeno()+"jeden zivot\n\n");
+        System.out.println("\n\n=== "+ciel.getMeno()+" stratil jeden zivot. ===\n\n");
 
         ciel.odstranitZivot();
-
     }
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class Bang {
     private static Hrac[] hraci;
-    private int aktualnyHrac;
+    private static int aktualnyHrac;
     private Stol stol;
 
     public Bang() {
@@ -50,6 +50,8 @@ public class Bang {
 
     private void spravTah(Hrac aktivnyHrac) {
         ArrayList<Karta> hracieKarty = aktivnyHrac.ukazatHracieKarty();
+        hracieKarty.add(Stol.balicek.remove(0));
+        hracieKarty.add(Stol.balicek.remove(0));
         if (hracieKarty.size() != 0) {
             this.zahrajKartu(hracieKarty, aktivnyHrac);
         }
@@ -63,10 +65,10 @@ public class Bang {
     }*/
 
     private void zahrajKartu(ArrayList<Karta> hracieKarty, Hrac aktivnyHrac) {
-        System.out.println("--- Hracie karty na ruke ---");
+        System.out.println("\n=== Hracie karty na ruke: ===");
         int cisloKarty = vyberKartu(hracieKarty, "zahrat");
         hracieKarty.get(cisloKarty).zahrajKartu(aktivnyHrac);
-}
+    }
 
     private int vyberKartu(ArrayList<Karta> karty, String sloveso) {
         for (int i = 0; i < karty.size(); i++) {
@@ -86,6 +88,7 @@ public class Bang {
 
     public static Hrac vyberHraca() {
         ArrayList<Hrac> hrajuciHraci = getHrajucichHracov();
+        System.out.println("\n=== Zijuci hraci: === ");
         for (int i = 0; i < hrajuciHraci.size(); i++) {
             System.out.println("Hrac " + (i+1) + ":" + hrajuciHraci.get(i).getMeno());
         }
@@ -117,6 +120,9 @@ public class Bang {
     public static ArrayList<Hrac> getHrajucichHracov() {
         ArrayList<Hrac> zijuciHraci = new ArrayList<>();
         for (Hrac hrac : hraci) {
+            if (hrac == hraci[Bang.aktualnyHrac]) {
+                continue;
+            }
             if (hrac.jeAktivny()) {
                 zijuciHraci.add(hrac);
             }
