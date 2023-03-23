@@ -37,15 +37,25 @@ public class Stol {
             hrac.setKarty(noveKarty);
         }
     }
+    public void premiesatBalicek() {
+        Collections.shuffle(this.odhadzovaciBalicek);
+        this.balicek.addAll(this.odhadzovaciBalicek);
+        odhadzovaciBalicek.clear();
+    }
     public ArrayList<Karta> potiahniKarty() {
         ArrayList<Karta> karty = new ArrayList<>();
+        if (this.balicek.size() < 2) {
+           this.premiesatBalicek();
+        }
         karty.add(balicek.remove(0));
         karty.add(balicek.remove(0));
         return karty;
     }
-
     public Karta kartaDoOdhadzovaciehoBalika(Karta karta) {
         odhadzovaciBalicek.add(karta);
         return karta;
+    }
+    public void kartyDoOdhadzovaciehoBalika(ArrayList<Karta> karty) {
+        odhadzovaciBalicek.addAll(karty);
     }
 }
