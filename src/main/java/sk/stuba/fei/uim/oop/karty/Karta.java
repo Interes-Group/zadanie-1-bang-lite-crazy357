@@ -3,8 +3,6 @@ package sk.stuba.fei.uim.oop.karty;
 import sk.stuba.fei.uim.oop.hrac.Hrac;
 import sk.stuba.fei.uim.oop.stol.Stol;
 
-import java.util.HashMap;
-
 public abstract class Karta {
     protected String meno;
     protected Stol stol;
@@ -13,15 +11,11 @@ public abstract class Karta {
         this.meno = meno;
         this.stol = stol;
     }
-
-    public abstract boolean mozeHrat();
-
-    public void zahrajKartu(Hrac hrac) {
-        System.out.println("--- "+ hrac.getMeno() + " zahral " + this.meno + " kartu. ---\n\n");
-    }
-
-
     public String getMeno() {
-        return  meno;
+        return meno;
+    }
+    public abstract boolean mozeHrat();
+    public void zahrajKartu(Hrac hrac, Hrac[] hraci) {
+        System.out.println("\n=== " + hrac.getMeno() + " zahral kartu " + this.meno + ". ===");
     }
 }

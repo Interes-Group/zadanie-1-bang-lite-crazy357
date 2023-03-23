@@ -4,12 +4,10 @@ import sk.stuba.fei.uim.oop.hrac.Hrac;
 import sk.stuba.fei.uim.oop.stol.Stol;
 
 public class Pivo extends Karta {
-    private static final String MENO_KARTY = "Pivo";
+    private static final String  MENO_KARTY = "Pivo";
+
     public Pivo(Stol stol) {
         super(MENO_KARTY, stol);
-    }
-    public Pivo(String meno, Stol stol) {
-        super(meno, stol);
     }
 
     @Override
@@ -18,11 +16,11 @@ public class Pivo extends Karta {
     }
 
     @Override
-    public void zahrajKartu(Hrac hrac) {
-        super.zahrajKartu(hrac);
+    public void zahrajKartu(Hrac hrac, Hrac[] hraci) {
+        super.zahrajKartu(hrac, hraci);
 
-        System.out.println("Pridal si si jeden zivot.");
+        System.out.println("--- Pridal si si jeden zivot. ---");
         hrac.pridatZivot();
-        System.out.println("Pocet tvojich zivotov: " + hrac.getZivoty());
+        System.out.println("--- Pocet tvojich zivotov je: " + hrac.getZivoty() + " ---\n");
     }
 }

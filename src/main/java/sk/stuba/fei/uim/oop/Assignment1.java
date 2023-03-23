@@ -4,7 +4,6 @@ import sk.stuba.fei.uim.oop.bang.Bang;
 
 public class Assignment1 {
     public static void main(String[] args) {
-        System.out.println("Skuska skuska");
         new Bang();
     }
 }

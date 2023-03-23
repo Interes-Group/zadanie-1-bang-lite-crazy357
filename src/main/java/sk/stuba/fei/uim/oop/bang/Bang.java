@@ -8,105 +8,97 @@ import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 import java.util.ArrayList;
 
 public class Bang {
-    private static Hrac[] hraci;
-    private static int aktualnyHrac;
+    private Hrac[] hraci;
     private Stol stol;
+    private int aktualnyHrac;
 
     public Bang() {
-        System.out.println("=== Vitaj v hre BANG! ===");
-        int pocetHracov = 0;
-        while (pocetHracov < 2 ||  pocetHracov > 4) {
-            pocetHracov = ZKlavesnice.readInt("--- Zadaj pocet hracov(2-4): ---");
-            if (pocetHracov < 2 || pocetHracov > 4) {
-                System.out.println("!!! Zadal si nespravny pocet hracov, skus znova. !!!");
-            }
-        }
-        this.hraci = new Hrac[pocetHracov];
-        for (int i = 0; i < pocetHracov; i++) {
-            this.hraci[i] = new Hrac(ZKlavesnice.readString("--- Zadaj meno "+ (i+1) +". hraca: ---"));
-        }
-        this.stol = new Stol(this.hraci);
+        System.out.println("\n=== Vitaj v hre Bang! ===\n");
+        inicializovatHracov();
         this.zacatHru();
     }
 
     private void zacatHru() {
-        System.out.println("=== HRA ZACALA ===");
+        System.out.println("\n===== HRA ZACALA =====");
         while (this.getPocetHrajucichHracov() > 1) {
             Hrac aktivnyHrac = this.hraci[this.aktualnyHrac];
             if (!aktivnyHrac.jeAktivny()) {
-                ArrayList<Karta> kartyDoDecku = aktivnyHrac.odstranitKartyZRuky();
                 this.inkrementPocitadlo();
                 continue;
             }
-
-            System.out.println("--- Hrac "+ aktivnyHrac.getMeno() + " zacina tah ---");
-            System.out.println("--- "+ aktivnyHrac.getMeno() + ", tvoj pocet zivotov je: "+ aktivnyHrac.getZivoty()+"---");
+            System.out.println("\n\n\n" + aktivnyHrac.getMeno() + " zacina tah. ===");
+            System.out.println("=== Tvoj pocet zivotov je: " + aktivnyHrac.getZivoty() + " ===\n");
             this.spravTah(aktivnyHrac);
             this.inkrementPocitadlo();
         }
         System.out.println("=== HRA SKONCILA ===");
-        System.out.println("A vyherca je "+ getVitaz().getMeno());
+        System.out.println("Vyherca je " + getVitaz().getMeno());
     }
-
+    private void inicializovatHracov() {
+        int pocetHracov = 0;
+        while (pocetHracov < 2 || pocetHracov > 4) {
+            pocetHracov = ZKlavesnice.readInt("=== Zadaj pocet hracov 2-4: ===");
+            if (pocetHracov < 2 || pocetHracov > 4) {
+                System.out.println("!!! Zadal si nespravny pocet hracov, skus znova! !!!\n");
+            }
+        }
+        this.hraci = new Hrac[pocetHracov];
+        for (int i = 0; i < pocetHracov; i++) {
+            this.hraci[i] = new Hrac(ZKlavesnice.readString("=== Zadaj meno " + (i+1) + ". hraca: "));
+        }
+        this.stol = new Stol(this.hraci);
+    }
     private void spravTah(Hrac aktivnyHrac) {
-        ArrayList<Karta> hracieKarty = aktivnyHrac.ukazatHracieKarty();
-        hracieKarty.add(Stol.balicek.remove(0));
-        hracieKarty.add(Stol.balicek.remove(0));
-        if (hracieKarty.size() != 0) {
-            this.zahrajKartu(hracieKarty, aktivnyHrac);
-        }
-    }
-
-    /*private void odstranitKartu(Hrac aktivnyHrac) {
-        System.out.println("--- Uz nemas ziadne hratelne karty na ruke! Ktoru kartu chces zahodit? ---");
-        ArrayList<Karta> karty = aktivnyHrac.ukazatVsetkyKarty();
-        int cisloKarty = vyberKartu(karty, "odstranit");
-        karty.get(cisloKarty).odstranitKartu(aktivnyHrac);
-    }*/
-
-    private void zahrajKartu(ArrayList<Karta> hracieKarty, Hrac aktivnyHrac) {
-        System.out.println("\n=== Hracie karty na ruke: ===");
-        int cisloKarty = vyberKartu(hracieKarty, "zahrat");
-        hracieKarty.get(cisloKarty).zahrajKartu(aktivnyHrac);
-    }
-
-    private int vyberKartu(ArrayList<Karta> karty, String sloveso) {
-        for (int i = 0; i < karty.size(); i++) {
-            System.out.println("Karta "+ (i+1)+ ":"+ karty.get(i).getMeno());
-        }
-        int cisloKarty = 0;
+        aktivnyHrac.potiahniDveKarty(this.stol.potiahniKarty());
+        ArrayList<Karta> hracieKarty;
+        ArrayList<Karta> kartyNaStole = aktivnyHrac.ukazatKartyNaStole();
+        int pokracovat = 1;
         while (true) {
-            cisloKarty = ZKlavesnice.readInt("--- Zadaj cislo karty, ktoru chces "+ sloveso+": ---")-1;
-            if (cisloKarty < 0 || cisloKarty > karty.size() - 1) {
-                System.out.println("!!! Zadal si nespravne cislo karty, skus znova. !!!");
-            } else {
+            hracieKarty = aktivnyHrac.ukazatHracieKarty();
+            if (hracieKarty.size() != 0 && pokracovat != 0) {
+                System.out.println("--- Na ruke mas tieto karty: ---");
+                ArrayList<Karta> vsetkyKartyNaRuke = aktivnyHrac.ukazatKartyNaRuke();
+                for (int i = 0; i < vsetkyKartyNaRuke.size(); i++) {
+                    System.out.println("     Karta " + (i+1) + ": " + vsetkyKartyNaRuke.get(i).getMeno());
+                }
+                pokracovat = this.zahrajKartu(hracieKarty, aktivnyHrac);
+            }
+            else {
+                System.out.println("=== Tvoj tah konci. ===");
                 break;
             }
+            if (getPocetHrajucichHracov() == 1) {
+                break;
+            }
+        }
+    }
+
+    private int zahrajKartu(ArrayList<Karta> hracieKarty, Hrac aktivnyHrac) {
+        System.out.println("--- Karty, ktore mozes zahrat: ---");
+        int cisloKarty = vyberKartu(hracieKarty, "zahrat");
+        if (cisloKarty != 0) {
+            cisloKarty--;
+            hracieKarty.get(cisloKarty).zahrajKartu(aktivnyHrac, hraci);
+            aktivnyHrac.odstranitKartuZRuky(this.stol.kartaDoOdhadzovaciehoBalika(hracieKarty.get(cisloKarty)));
+            cisloKarty++;
         }
         return cisloKarty;
     }
 
-    public static Hrac vyberHraca() {
-        ArrayList<Hrac> hrajuciHraci = getHrajucichHracov();
-        System.out.println("\n=== Zijuci hraci: === ");
-        for (int i = 0; i < hrajuciHraci.size(); i++) {
-            System.out.println("Hrac " + (i+1) + ":" + hrajuciHraci.get(i).getMeno());
+    private int vyberKartu(ArrayList<Karta> hracieKarty, String sloveso) {
+        for (int i = 0; i < hracieKarty.size(); i++) {
+            System.out.println("     Karta " + (i+1) + ": " + hracieKarty.get(i).getMeno());
         }
-        int cisloHraca = 0;
+        int cisloKarty = 0;
         while (true) {
-            cisloHraca = ZKlavesnice.readInt("--- Vyber cislo hraca, na ktoreho chces pouzit kartu: ---")-1;
-            if (cisloHraca < 0 || cisloHraca > hrajuciHraci.size() - 1) {
-                System.out.println("!!! Zadal si nespravne cislo hraca, skus znova. !!!");
-            } else {
-                break;
+            cisloKarty = ZKlavesnice.readInt("--- Zadaj cislo karty, ktoru chces " + sloveso + ", " +
+                    "stlac 0 ak nechces zahrat ziadnu kartu: ---");
+            if (cisloKarty < 0 || cisloKarty > hracieKarty.size()) {
+                System.out.println("!!! Zadal si nespravne cislo, skus znova! !!!");
             }
+            else break;
         }
-        return hrajuciHraci.get(cisloHraca);
-    }
-
-    private void inkrementPocitadlo() {
-        this.aktualnyHrac++;
-        this.aktualnyHrac %= this.hraci.length;
+        return cisloKarty;
     }
     private int getPocetHrajucichHracov() {
         int pocet = 0;
@@ -117,19 +109,10 @@ public class Bang {
         }
         return pocet;
     }
-    public static ArrayList<Hrac> getHrajucichHracov() {
-        ArrayList<Hrac> zijuciHraci = new ArrayList<>();
-        for (Hrac hrac : hraci) {
-            if (hrac == hraci[Bang.aktualnyHrac]) {
-                continue;
-            }
-            if (hrac.jeAktivny()) {
-                zijuciHraci.add(hrac);
-            }
-        }
-        return zijuciHraci;
+    private void inkrementPocitadlo() {
+        this.aktualnyHrac++;
+        this.aktualnyHrac %= this.hraci.length;
     }
-
     private Hrac getVitaz() {
         for (Hrac hrac : this.hraci) {
             if (hrac.jeAktivny()) {
@@ -138,18 +121,5 @@ public class Bang {
         }
         return null;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -1,17 +1,22 @@
 package sk.stuba.fei.uim.oop.stol;
 
 import sk.stuba.fei.uim.oop.hrac.Hrac;
-import sk.stuba.fei.uim.oop.karty.*;
+import sk.stuba.fei.uim.oop.karty.Karta;
+import sk.stuba.fei.uim.oop.karty.Pivo;
+import sk.stuba.fei.uim.oop.karty.Vedla;
+import sk.stuba.fei.uim.oop.karty.Vystrel;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Stol {
-    public static ArrayList<Karta> balicek;
-    public static ArrayList<Karta> odhadzovaciBalicek;
+    private ArrayList<Karta> balicek;
+    private ArrayList<Karta> odhadzovaciBalicek;
 
     public Stol(Hrac[] hraci) {
         this.balicek = new ArrayList<>();
+        this.odhadzovaciBalicek = new ArrayList<>();
+
         for (int i = 0; i < 30; i++) {
             balicek.add(new Vystrel(this));
         }
@@ -21,17 +26,9 @@ public class Stol {
         for (int i = 0; i < 8; i++) {
             balicek.add(new Pivo(this));
         }
-        for (int i = 0; i < 6; i++) {
-            balicek.add(new CatBalou(this));
-        }
-        for (int i = 0; i < 4; i++) {
-            balicek.add(new Dostavnik(this));
-        }
-        balicek.add(new Indiani(this));
-        balicek.add(new Indiani(this));
-
 
         Collections.shuffle(this.balicek);
+
         for (Hrac hrac : hraci) {
             ArrayList<Karta> noveKarty = new ArrayList<>();
             for (int i = 0; i < 4; i++) {
@@ -39,10 +36,16 @@ public class Stol {
             }
             hrac.setKarty(noveKarty);
         }
+    }
+    public ArrayList<Karta> potiahniKarty() {
+        ArrayList<Karta> karty = new ArrayList<>();
+        karty.add(balicek.remove(0));
+        karty.add(balicek.remove(0));
+        return karty;
+    }
 
-        System.out.println("karty v balicku:");
-        for (Karta karta : balicek) {
-            System.out.println(karta.getMeno());
-        }
+    public Karta kartaDoOdhadzovaciehoBalika(Karta karta) {
+        odhadzovaciBalicek.add(karta);
+        return karta;
     }
 }
