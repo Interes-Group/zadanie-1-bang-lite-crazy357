@@ -25,6 +25,10 @@ public class Stol {
         }
         balicek.add(new Indiani(this));
         balicek.add(new Indiani(this));
+        balicek.add(new Dostavnik(this));
+        balicek.add(new Dostavnik(this));
+        balicek.add(new Dostavnik(this));
+        balicek.add(new Dostavnik(this));
 
         Collections.shuffle(this.balicek);
 

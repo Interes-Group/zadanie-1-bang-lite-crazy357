@@ -53,20 +53,32 @@ public class Bang {
         System.out.println("--- Potiahol si si dve karty. ---");
         ArrayList<Karta> hracieKarty;
         ArrayList<Karta> vsetkyKartyNaRuke;
-        ArrayList<Karta> kartyNaStole = aktivnyHrac.ukazatKartyNaStole();
+        ArrayList<Karta> kartyNaStole;
         int pokracovat = 1;
         while (true) {
             hracieKarty = aktivnyHrac.ukazatHracieKarty();
             vsetkyKartyNaRuke = aktivnyHrac.ukazatKartyNaRuke();
+            kartyNaStole = aktivnyHrac.ukazatKartyNaStole();
             if (hracieKarty.size() != 0 && pokracovat != 0) {
+                if (kartyNaStole.size() != 0) {
+                    System.out.println("--- Na stole mas tieto karty: ---");
+                    for (int i = 0; i < kartyNaStole.size(); i++) {
+                        System.out.println("   Karta " + (i+1) + ": " + kartyNaStole.get(i).getMeno());
+                    }
+                }
+                else {
+                    System.out.println("--- Na stole nemas ziadne karty. ---");
+                }
                 System.out.println("--- Na ruke mas tieto karty: ---");
-
                 for (int i = 0; i < vsetkyKartyNaRuke.size(); i++) {
                     System.out.println("     Karta " + (i+1) + ": " + vsetkyKartyNaRuke.get(i).getMeno());
                 }
                 pokracovat = this.zahrajKartu(hracieKarty, aktivnyHrac);
             }
             else {
+                if (hracieKarty.size() == 0) {
+                System.out.println("--- Nemas na ruke ziadne hratelne karty. ---");
+                }
                 System.out.println("=== Tvoj tah konci. ===");
                 if (vsetkyKartyNaRuke.size() > aktivnyHrac.getZivoty()) {
                     aktivnyHrac.odstranitPrebytocneKarty(stol);

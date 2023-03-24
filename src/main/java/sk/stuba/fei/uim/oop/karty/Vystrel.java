@@ -29,7 +29,6 @@ public class Vystrel extends Karta {
         else {
             System.out.println("--- " + ciel.getMeno() + " nestratil zivot, minul si ho. ---\n");
         }
-
     }
     private Hrac vybratHraca(Hrac[] hraci, Hrac hrac) {
         int aktualnyHrac = 0;
