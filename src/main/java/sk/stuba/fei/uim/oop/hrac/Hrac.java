@@ -2,6 +2,7 @@ package sk.stuba.fei.uim.oop.hrac;
 
 import sk.stuba.fei.uim.oop.karty.Karta;
 import sk.stuba.fei.uim.oop.karty.Vedla;
+import sk.stuba.fei.uim.oop.karty.Vystrel;
 import sk.stuba.fei.uim.oop.stol.Stol;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class Hrac {
     public int getZivoty() {
         return zivoty;
     }
-    public int odstranitZivot(Hrac ciel) {
+    public int skontrolovatVedla(Hrac ciel) {
         int podariloSa = 1;
         for (Karta karta : ciel.kartyNaRuke) {
             if (karta instanceof Vedla) {
@@ -81,7 +82,6 @@ public class Hrac {
             System.out.println("--- Odstranena prebytocna karta: " + karta.getMeno() + " ---");
         }
     }
-
     public void odstranitKarty() {
         ArrayList<Karta> kartyDoBalicka = new ArrayList<>();
         kartyDoBalicka.addAll(this.kartyNaStole);
@@ -91,5 +91,21 @@ public class Hrac {
         if (kartyDoBalicka.size() != 0) {
             this.stol.kartyDoOdhadzovaciehoBalika(kartyDoBalicka);
         }
+    }
+    public int skontrolovatBang(Hrac hrac) {
+        int trafil = 1;
+        for (Karta karta : hrac.kartyNaRuke) {
+            if (karta instanceof Vystrel) {
+                System.out.println("--- " + hrac.getMeno() + " zahral kartu Bang! na indianov. ---");
+                hrac.odstranitKartuZRuky(karta);
+                trafil = 0;
+                break;
+            }
+        }
+        if (trafil != 0) {
+            hrac.zivoty--;
+            System.out.println("--- " + hrac.getMeno() + " nema kartu Bang! na ruke. Stratil jeden zivot. Pocet zivotov: " + hrac.getZivoty() + " ---");
+        }
+        return trafil;
     }
 }

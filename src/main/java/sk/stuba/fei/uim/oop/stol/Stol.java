@@ -1,10 +1,7 @@
 package sk.stuba.fei.uim.oop.stol;
 
 import sk.stuba.fei.uim.oop.hrac.Hrac;
-import sk.stuba.fei.uim.oop.karty.Karta;
-import sk.stuba.fei.uim.oop.karty.Pivo;
-import sk.stuba.fei.uim.oop.karty.Vedla;
-import sk.stuba.fei.uim.oop.karty.Vystrel;
+import sk.stuba.fei.uim.oop.karty.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +23,8 @@ public class Stol {
         for (int i = 0; i < 8; i++) {
             balicek.add(new Pivo(this));
         }
+        balicek.add(new Indiani(this));
+        balicek.add(new Indiani(this));
 
         Collections.shuffle(this.balicek);
 

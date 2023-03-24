@@ -22,7 +22,7 @@ public class Vystrel extends Karta {
     public void zahrajKartu(Hrac hrac, Hrac[] hraci) {
         super.zahrajKartu(hrac, hraci);
         Hrac ciel = this.vybratHraca(hraci, hrac);
-        int zivotDole = ciel.odstranitZivot(ciel);
+        int zivotDole = ciel.skontrolovatVedla(ciel);
         if (zivotDole == 1) {
             System.out.println("\n=== " + ciel.getMeno() + " stratil jeden zivot. Jeho pocet zivotov je: " + ciel.getZivoty() + " ===\n");
         }
@@ -52,7 +52,6 @@ public class Vystrel extends Karta {
         }
         return zijuciHraci.get(cisloHraca);
     }
-
     private ArrayList<Hrac> getZijucichHracov(Hrac[] hraci, int aktualnyHrac) {
         ArrayList<Hrac> zijuciHraci = new ArrayList<>();
         for (Hrac hrac : hraci) {
