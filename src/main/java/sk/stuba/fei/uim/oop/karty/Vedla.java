@@ -1,5 +1,6 @@
 package sk.stuba.fei.uim.oop.karty;
 
+import sk.stuba.fei.uim.oop.hrac.Hrac;
 import sk.stuba.fei.uim.oop.stol.Stol;
 
 public class Vedla extends Karta {
@@ -10,7 +11,7 @@ public class Vedla extends Karta {
     }
 
     @Override
-    public boolean mozeHrat() {
+    public boolean mozeHrat(Hrac hrac) {
         return false;
     }
 }

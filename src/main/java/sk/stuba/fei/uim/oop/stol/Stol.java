@@ -22,6 +22,7 @@ public class Stol {
         }
         for (int i = 0; i < 8; i++) {
             balicek.add(new Pivo(this));
+            balicek.add(new Barrel(this));
         }
         balicek.add(new Indiani(this));
         balicek.add(new Indiani(this));
@@ -29,6 +30,8 @@ public class Stol {
         balicek.add(new Dostavnik(this));
         balicek.add(new Dostavnik(this));
         balicek.add(new Dostavnik(this));
+        balicek.add(new Barrel(this));
+        balicek.add(new Barrel(this));
 
         Collections.shuffle(this.balicek);
 

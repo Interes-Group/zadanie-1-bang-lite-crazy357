@@ -14,7 +14,7 @@ public abstract class Karta {
     public String getMeno() {
         return meno;
     }
-    public abstract boolean mozeHrat();
+    public abstract boolean mozeHrat(Hrac hrac);
     public void zahrajKartu(Hrac hrac, Hrac[] hraci) {
         System.out.println("\n=== " + hrac.getMeno() + " zahral kartu " + this.meno + ". ===");
     }

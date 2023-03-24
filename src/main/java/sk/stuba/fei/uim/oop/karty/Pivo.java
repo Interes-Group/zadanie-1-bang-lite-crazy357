@@ -11,7 +11,7 @@ public class Pivo extends Karta {
     }
 
     @Override
-    public boolean mozeHrat() {
+    public boolean mozeHrat(Hrac hrac) {
         return true;
     }
 

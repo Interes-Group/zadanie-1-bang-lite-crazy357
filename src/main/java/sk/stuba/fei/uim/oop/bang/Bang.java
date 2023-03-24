@@ -40,7 +40,7 @@ public class Bang {
                 this.inkrementPocitadlo();
                 continue;
             }
-            System.out.println("\n\n\n" + aktivnyHrac.getMeno() + " zacina tah. ===");
+            System.out.println("\n\n\n=== " + aktivnyHrac.getMeno() + " zacina tah. ===");
             System.out.println("=== Tvoj pocet zivotov je: " + aktivnyHrac.getZivoty() + " ===\n");
             this.spravTah(aktivnyHrac);
             this.inkrementPocitadlo();
@@ -63,7 +63,7 @@ public class Bang {
                 if (kartyNaStole.size() != 0) {
                     System.out.println("--- Na stole mas tieto karty: ---");
                     for (int i = 0; i < kartyNaStole.size(); i++) {
-                        System.out.println("   Karta " + (i+1) + ": " + kartyNaStole.get(i).getMeno());
+                        System.out.println("     Karta " + (i+1) + ": " + kartyNaStole.get(i).getMeno());
                     }
                 }
                 else {

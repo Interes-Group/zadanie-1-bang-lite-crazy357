@@ -10,7 +10,7 @@ public class Indiani extends Karta {
     }
 
     @Override
-    public boolean mozeHrat() {
+    public boolean mozeHrat(Hrac hrac) {
         return true;
     }
 

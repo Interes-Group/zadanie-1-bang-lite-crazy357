@@ -3,18 +3,18 @@ package sk.stuba.fei.uim.oop.karty;
 import sk.stuba.fei.uim.oop.hrac.Hrac;
 import sk.stuba.fei.uim.oop.stol.Stol;
 
-public class Dostavnik extends Karta {
-    private static final String NAZOV_KARTY = "Dostavnik";
-    public Dostavnik(Stol stol) {
+public class Barrel extends Karta {
+    private static final String NAZOV_KARTY = "Barrel";
+    public Barrel(Stol stol) {
         super(NAZOV_KARTY, stol);
     }
     @Override
     public boolean mozeHrat(Hrac hrac) {
-        return true;
+        return (!hrac.skontrolovatBarrel(hrac));
     }
     @Override
     public void zahrajKartu(Hrac hrac, Hrac[] hraci) {
         super.zahrajKartu(hrac, hraci);
-        hrac.potiahniDveKarty(this.stol.potiahniKarty());
+        hrac.vylozitBarrelNaStol(hrac);
     }
 }

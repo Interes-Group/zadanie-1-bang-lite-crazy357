@@ -1,5 +1,6 @@
 package sk.stuba.fei.uim.oop.hrac;
 
+import sk.stuba.fei.uim.oop.karty.Barrel;
 import sk.stuba.fei.uim.oop.karty.Karta;
 import sk.stuba.fei.uim.oop.karty.Vedla;
 import sk.stuba.fei.uim.oop.karty.Vystrel;
@@ -59,7 +60,7 @@ public class Hrac {
     public ArrayList<Karta> ukazatHracieKarty() {
         ArrayList<Karta> karty = new ArrayList<>();
         for (Karta karta : this.kartyNaRuke) {
-            if (karta.mozeHrat()) {
+            if (karta.mozeHrat(this)) {
                 karty.add(karta);
             }
         }
@@ -107,5 +108,22 @@ public class Hrac {
             System.out.println("--- " + hrac.getMeno() + " nema kartu Bang! na ruke. Stratil jeden zivot. Pocet zivotov: " + hrac.getZivoty() + " ---");
         }
         return trafil;
+    }
+    public boolean skontrolovatBarrel(Hrac hrac) {
+        for (Karta karta : hrac.kartyNaStole){
+            if (karta instanceof Barrel){
+                return true;
+            }
+        }
+        return false;
+    }
+    public void vylozitBarrelNaStol(Hrac hrac) {
+        for (Karta karta : hrac.kartyNaRuke) {
+            if (karta instanceof Barrel) {
+                hrac.kartyNaStole.add(karta);
+                hrac.odstranitKartuZRuky(karta);
+                break;
+            }
+        }
     }
 }

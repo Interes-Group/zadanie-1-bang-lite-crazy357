@@ -14,7 +14,7 @@ public class Vystrel extends Karta {
     }
 
     @Override
-    public boolean mozeHrat() {
+    public boolean mozeHrat(Hrac hrac) {
         return true;
     }
 
@@ -22,8 +22,21 @@ public class Vystrel extends Karta {
     public void zahrajKartu(Hrac hrac, Hrac[] hraci) {
         super.zahrajKartu(hrac, hraci);
         Hrac ciel = this.vybratHraca(hraci, hrac);
-        int zivotDole = ciel.skontrolovatVedla(ciel);
-        if (zivotDole == 1) {
+        int zivotDole = 0;
+        if (ciel.skontrolovatBarrel(ciel)) {
+            zivotDole = (int) (Math.random()*5);
+            if (zivotDole == 0) {
+                System.out.println("--- " + ciel.getMeno() + " sa skryl za Barrel. ---");
+            }
+            else {
+                System.out.println("--- " + ciel.getMeno() + " sa neskryl za Barrel. ---");
+                zivotDole = ciel.skontrolovatVedla(ciel);
+            }
+        }
+        else {
+            zivotDole = ciel.skontrolovatVedla(ciel);
+        }
+        if (zivotDole != 0) {
             System.out.println("\n=== " + ciel.getMeno() + " stratil jeden zivot. Jeho pocet zivotov je: " + ciel.getZivoty() + " ===\n");
         }
         else {
