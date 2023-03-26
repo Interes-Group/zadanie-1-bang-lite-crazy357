@@ -14,8 +14,7 @@ public class Dostavnik extends Karta {
     public boolean mozeHrat(Hrac hrac) {
         if (this.stol.getPocetKarietVOdhadzovacom() == 1 && this.stol.getPocetKarietVBalicku() == 1) {
             return true;
-        }
-        else {
+        } else {
             if (this.stol.getPocetKarietVBalicku() >= 2 || this.stol.getPocetKarietVOdhadzovacom() >= 2) {
                 return true;
             }

@@ -27,9 +27,11 @@ public class Vazenie extends Karta {
     private void vyberHraca(Hrac[] hraci, Hrac hrac) {
         ArrayList<Hrac> ciele = new ArrayList<>();
         for (Hrac hrac1 : hraci) {
-            if (hrac1 != hrac) {
-                if (hrac1.skontrolovatVazenie() == 0) {
-                    ciele.add(hrac1);
+            if (hrac1.jeAktivny()) {
+                if (hrac1 != hrac) {
+                    if (hrac1.skontrolovatVazenie() == 0) {
+                        ciele.add(hrac1);
+                    }
                 }
             }
         }

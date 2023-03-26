@@ -219,11 +219,9 @@ public class Hrac {
         if (uspesnost != 0) {
             System.out.println("--- Nepodarilo sa ti uniknut z vazenia, vynechavas tah. ---\n");
             hrac.odstranitKartuZoStola(karta);
-            hrac.stol.kartaDoOdhadzovaciehoBalika(karta);
         } else {
             System.out.println("--- Podarilo sa ti uniknut z vazenia. Pokracuj vo svojom tahu. ---\n");
-            hrac.odstranitKartuZoStola(karta);
-            hrac.stol.vazenieDoOdhadzovacieho();
+            this.odstranitKartuZoStola(karta);
             utek = 1;
         }
         return utek;

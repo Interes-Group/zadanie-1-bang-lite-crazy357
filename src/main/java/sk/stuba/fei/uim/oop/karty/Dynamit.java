@@ -5,6 +5,7 @@ import sk.stuba.fei.uim.oop.stol.Stol;
 
 public class Dynamit extends Karta {
     private static final String NAZOV_KARTY = "Dynamit";
+
     public Dynamit(Stol stol) {
         super(NAZOV_KARTY, stol);
     }
