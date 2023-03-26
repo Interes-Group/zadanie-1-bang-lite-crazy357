@@ -135,11 +135,11 @@ public class Hrac {
         this.ukazatKartyNaStole().remove(karta);
     }
 
-    public void skontrolovatEfetkDynamitu(Hrac predoslyHrac) {
+    public void skontrolovatEfetkDynamitu(Hrac predoslyHrac, Hrac hrac) {
         System.out.println("--- Kontrola efektu dynamitu: ---");
         int zivotyDole = (int) (Math.random() * 9);
         Karta karta = null;
-        for (Karta hodnota : this.kartyNaStole) {
+        for (Karta hodnota : hrac.kartyNaStole) {
             if (hodnota instanceof Dynamit) {
                 karta = hodnota;
                 break;
@@ -147,22 +147,22 @@ public class Hrac {
         }
         if (zivotyDole != 0) {
             System.out.println("--- Dynamit ti nevybuchol, posuva sa predoslemu hracovi. ---\n");
-            this.odstranitKartuZoStola(karta);
+            hrac.odstranitKartuZoStola(karta);
             predoslyHrac.kartyNaStole.add(new Dynamit(stol));
         } else {
             System.out.println("--- Dynamit ti vybuchol, stracas 3 zivoty. ---");
-            if (this.zivoty > 3) {
+            if (hrac.zivoty > 3) {
                 for (int i = 0; i < 3; i++) {
-                    this.zivoty--;
+                    hrac.zivoty--;
                 }
             } else {
-                for (int i = 0; i < this.zivoty; i++) {
-                    this.zivoty--;
-                    System.out.println("--- Stratil si vsetky zivoty. ----\n");
+                for (int i = 0; i < hrac.zivoty; i++) {
+                    hrac.zivoty--;
                 }
+                System.out.println("--- Stratil si vsetky zivoty. ----\n");
             }
-            this.odstranitKartuZoStola(karta);
-            this.stol.kartaDoOdhadzovaciehoBalika(karta);
+            hrac.odstranitKartuZoStola(karta);
+            hrac.stol.kartaDoOdhadzovaciehoBalika(karta);
         }
     }
 

@@ -58,7 +58,7 @@ public class Bang {
                 this.spravTah(aktivnyHrac, predoslyHrac);
             }
             else {
-                aktivnyHrac.skontrolovatEfetkDynamitu(predoslyHrac);
+                aktivnyHrac.skontrolovatEfetkDynamitu(predoslyHrac, aktivnyHrac);
                 if (aktivnyHrac.getZivoty() > 0) {
                     this.spravTah(aktivnyHrac, predoslyHrac);
                 }
