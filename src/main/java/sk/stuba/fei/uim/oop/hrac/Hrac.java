@@ -151,15 +151,11 @@ public class Hrac {
             predoslyHrac.kartyNaStole.add(new Dynamit(stol));
         } else {
             System.out.println("--- Dynamit ti vybuchol, stracas 3 zivoty. ---");
-            if (hrac.zivoty > 3) {
-                for (int i = 0; i < 3; i++) {
-                    hrac.zivoty--;
-                }
-            } else {
-                for (int i = 0; i < hrac.zivoty; i++) {
-                    hrac.zivoty--;
-                }
-                System.out.println("--- Stratil si vsetky zivoty. ----\n");
+            for (int i = 0; i < 3; i++) {
+                hrac.zivoty--;
+            }
+            if (hrac.getZivoty() < 0) {
+                System.out.println("--- Stratil si vsetky zivoty. ---");
             }
             hrac.odstranitKartuZoStola(karta);
             hrac.stol.kartaDoOdhadzovaciehoBalika(karta);
