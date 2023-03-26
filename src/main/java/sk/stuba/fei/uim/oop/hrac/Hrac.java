@@ -1,9 +1,6 @@
 package sk.stuba.fei.uim.oop.hrac;
 
-import sk.stuba.fei.uim.oop.karty.Barrel;
-import sk.stuba.fei.uim.oop.karty.Karta;
-import sk.stuba.fei.uim.oop.karty.Vedla;
-import sk.stuba.fei.uim.oop.karty.Vystrel;
+import sk.stuba.fei.uim.oop.karty.*;
 import sk.stuba.fei.uim.oop.stol.Stol;
 
 import java.util.ArrayList;
@@ -134,13 +131,67 @@ public class Hrac {
         return false;
     }
 
-    public void vylozitBarrelNaStol(Hrac hrac) {
-        for (Karta karta : hrac.kartyNaRuke) {
-            if (karta instanceof Barrel) {
-                hrac.kartyNaStole.add(karta);
-                hrac.odstranitKartuZRuky(karta);
+    public void odstranitKartuZoStola(Karta karta) {
+        this.ukazatKartyNaStole().remove(karta);
+    }
+
+    public void skontrolovatEfetkDynamitu(Hrac predoslyHrac) {
+        System.out.println("--- Kontrola efektu dynamitu: ---");
+        int zivotyDole = (int) (Math.random() * 9);
+        Karta karta = null;
+        for (Karta hodnota : this.kartyNaStole) {
+            if (hodnota instanceof Dynamit) {
+                karta = hodnota;
                 break;
             }
         }
+        if (zivotyDole != 0) {
+            System.out.println("--- Dynamit ti nevybuchol, posuva sa predoslemu hracovi. ---\n");
+            this.odstranitKartuZoStola(karta);
+            predoslyHrac.kartyNaStole.add(new Dynamit(stol));
+        } else {
+            System.out.println("--- Dynamit ti vybuchol, stracas 3 zivoty. ---");
+            if (this.zivoty > 3) {
+                for (int i = 0; i < 3; i++) {
+                    this.zivoty--;
+                }
+            } else {
+                for (int i = 0; i < this.zivoty; i++) {
+                    this.zivoty--;
+                    System.out.println("--- Stratil si vsetky zivoty. ----\n");
+                }
+            }
+            this.odstranitKartuZoStola(karta);
+            this.stol.kartaDoOdhadzovaciehoBalika(karta);
+        }
+    }
+
+    public void vylozitBarrelNaStol() {
+        for (Karta karta : this.kartyNaRuke) {
+            if (karta instanceof Barrel) {
+                this.kartyNaStole.add(karta);
+                this.odstranitKartuZRuky(karta);
+                break;
+            }
+        }
+    }
+
+    public void vylozitDynamitNaStol() {
+        for (Karta karta : this.kartyNaRuke) {
+            if (karta instanceof Dynamit) {
+                this.kartyNaStole.add(karta);
+                this.odstranitKartuZRuky(karta);
+                break;
+            }
+        }
+    }
+
+    public int skontrolovatDynamit() {
+        for (Karta karta : this.kartyNaStole) {
+            if (karta instanceof Dynamit) {
+                return 1;
+            }
+        }
+        return 0;
     }
 }

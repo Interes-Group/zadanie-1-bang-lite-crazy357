@@ -1,12 +1,13 @@
 package sk.stuba.fei.uim.oop.bang;
 
 import sk.stuba.fei.uim.oop.hrac.Hrac;
+import sk.stuba.fei.uim.oop.karty.Barrel;
+import sk.stuba.fei.uim.oop.karty.Dynamit;
 import sk.stuba.fei.uim.oop.karty.Karta;
 import sk.stuba.fei.uim.oop.stol.Stol;
 import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Bang {
     private Hrac[] hraci;
@@ -37,6 +38,7 @@ public class Bang {
     private void zacatHru() {
         System.out.println("\n\n\n========== HRA ZACALA ==========");
         int pocetKol = 0;
+        Hrac predoslyHrac = null;
         while (this.getPocetHrajucichHracov() > 1) {
             System.out.println("\n\n\n");
             if (this.aktualnyHrac % hraci.length == 0) {
@@ -51,23 +53,36 @@ public class Bang {
             }
             System.out.println("=== " + aktivnyHrac.getMeno() + " zacina tah. ===");
             System.out.println("=== Tvoj pocet zivotov je: " + aktivnyHrac.getZivoty() + " ===\n");
-            this.spravTah(aktivnyHrac);
+
+            if(aktivnyHrac.skontrolovatDynamit() == 0) {
+                this.spravTah(aktivnyHrac, predoslyHrac);
+            }
+            else {
+                aktivnyHrac.skontrolovatEfetkDynamitu(predoslyHrac);
+                if (aktivnyHrac.getZivoty() > 0) {
+                    this.spravTah(aktivnyHrac, predoslyHrac);
+                }
+            }
+            predoslyHrac = aktivnyHrac;
+            System.out.println("Predosly hrac je " + predoslyHrac.getMeno());
             this.inkrementPocitadlo();
         }
         System.out.println("\n\n========== HRA SKONCILA ==========");
         System.out.println("Vyherca je " + getVitaz().getMeno());
     }
 
-    private void spravTah(Hrac aktivnyHrac) {
+    private void spravTah(Hrac aktivnyHrac, Hrac predoslyHrac) {
         aktivnyHrac.potiahniDveKarty(this.stol.potiahniKarty());
         ArrayList<Karta> hracieKarty;
         ArrayList<Karta> vsetkyKartyNaRuke;
         ArrayList<Karta> kartyNaStole;
         int pokracovat = 1;
+
         while (true) {
             hracieKarty = aktivnyHrac.ukazatHracieKarty();
             vsetkyKartyNaRuke = aktivnyHrac.ukazatKartyNaRuke();
             kartyNaStole = aktivnyHrac.ukazatKartyNaStole();
+
             if (hracieKarty.size() != 0 && pokracovat != 0) {
                 if (kartyNaStole.size() != 0) {
                     System.out.println("--- Na stole mas tieto karty: ---");

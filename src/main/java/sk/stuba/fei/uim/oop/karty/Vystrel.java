@@ -24,25 +24,23 @@ public class Vystrel extends Karta {
         Hrac ciel = this.vybratHraca(hraci, hrac);
         int zivotDole = 0;
         if (ciel.skontrolovatBarrel(ciel)) {
-            zivotDole = (int) (Math.random()*5);
+            zivotDole = (int) (Math.random() * 5);
             if (zivotDole == 0) {
                 System.out.println("--- " + ciel.getMeno() + " sa skryl za Barrel. ---");
-            }
-            else {
+            } else {
                 System.out.println("--- " + ciel.getMeno() + " sa neskryl za Barrel. ---");
                 zivotDole = ciel.skontrolovatVedla(ciel);
             }
-        }
-        else {
+        } else {
             zivotDole = ciel.skontrolovatVedla(ciel);
         }
         if (zivotDole != 0) {
             System.out.println("\n=== " + ciel.getMeno() + " stratil jeden zivot. Jeho pocet zivotov je: " + ciel.getZivoty() + " ===\n");
-        }
-        else {
+        } else {
             System.out.println("--- " + ciel.getMeno() + " nestratil zivot, minul si ho. ---\n");
         }
     }
+
     private Hrac vybratHraca(Hrac[] hraci, Hrac hrac) {
         int aktualnyHrac = 0;
         for (Hrac hrac1 : hraci) {
@@ -53,7 +51,7 @@ public class Vystrel extends Karta {
         ArrayList<Hrac> zijuciHraci = getZijucichHracov(hraci, aktualnyHrac);
         System.out.println("--- Zijuci hraci: ---");
         for (int i = 0; i < zijuciHraci.size(); i++) {
-            System.out.println("     Hrac " + (i+1) + ": " + zijuciHraci.get(i).getMeno() + ". Pocet zivotov: " + zijuciHraci.get(i).getZivoty());
+            System.out.println("     Hrac " + (i + 1) + ": " + zijuciHraci.get(i).getMeno() + ". Pocet zivotov: " + zijuciHraci.get(i).getZivoty());
         }
         int cisloHraca = 0;
         while (true) {
@@ -64,6 +62,7 @@ public class Vystrel extends Karta {
         }
         return zijuciHraci.get(cisloHraca);
     }
+
     private ArrayList<Hrac> getZijucichHracov(Hrac[] hraci, int aktualnyHrac) {
         ArrayList<Hrac> zijuciHraci = new ArrayList<>();
         for (Hrac hrac : hraci) {

@@ -18,6 +18,6 @@ public class Barrel extends Karta {
     @Override
     public void zahrajKartu(Hrac hrac, Hrac[] hraci) {
         super.zahrajKartu(hrac, hraci);
-        hrac.vylozitBarrelNaStol(hrac);
+        hrac.vylozitBarrelNaStol();
     }
 }
