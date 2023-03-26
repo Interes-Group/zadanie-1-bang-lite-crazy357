@@ -4,6 +4,7 @@ import sk.stuba.fei.uim.oop.hrac.Hrac;
 import sk.stuba.fei.uim.oop.karty.Barrel;
 import sk.stuba.fei.uim.oop.karty.Dynamit;
 import sk.stuba.fei.uim.oop.karty.Karta;
+import sk.stuba.fei.uim.oop.karty.Vazenie;
 import sk.stuba.fei.uim.oop.stol.Stol;
 import sk.stuba.fei.uim.oop.utility.ZKlavesnice;
 
@@ -54,24 +55,34 @@ public class Bang {
             System.out.println("=== " + aktivnyHrac.getMeno() + " zacina tah. ===");
             System.out.println("=== Tvoj pocet zivotov je: " + aktivnyHrac.getZivoty() + " ===\n");
 
-            if(aktivnyHrac.skontrolovatDynamit() == 0) {
-                this.spravTah(aktivnyHrac, predoslyHrac);
-            }
-            else {
+            if (aktivnyHrac.skontrolovatDynamit() == 0) {
+                if (aktivnyHrac.skontrolovatVazenie() == 0) {
+                    this.spravTah(aktivnyHrac);
+                } else {
+                    if (aktivnyHrac.skontrolovatEfektVazenia(aktivnyHrac) == 1) {
+                        this.spravTah(aktivnyHrac);
+                    }
+                }
+            } else {
                 aktivnyHrac.skontrolovatEfetkDynamitu(predoslyHrac, aktivnyHrac);
                 if (aktivnyHrac.getZivoty() > 0) {
-                    this.spravTah(aktivnyHrac, predoslyHrac);
+                    if (aktivnyHrac.skontrolovatVazenie() == 0) {
+                        this.spravTah(aktivnyHrac);
+                    } else {
+                        if (aktivnyHrac.skontrolovatEfektVazenia(aktivnyHrac) == 1) {
+                            this.spravTah(aktivnyHrac);
+                        }
+                    }
                 }
             }
             predoslyHrac = aktivnyHrac;
-            System.out.println("Predosly hrac je " + predoslyHrac.getMeno());
             this.inkrementPocitadlo();
         }
         System.out.println("\n\n========== HRA SKONCILA ==========");
         System.out.println("Vyherca je " + getVitaz().getMeno());
     }
 
-    private void spravTah(Hrac aktivnyHrac, Hrac predoslyHrac) {
+    private void spravTah(Hrac aktivnyHrac) {
         aktivnyHrac.potiahniDveKarty(this.stol.potiahniKarty());
         ArrayList<Karta> hracieKarty;
         ArrayList<Karta> vsetkyKartyNaRuke;
@@ -83,19 +94,20 @@ public class Bang {
             vsetkyKartyNaRuke = aktivnyHrac.ukazatKartyNaRuke();
             kartyNaStole = aktivnyHrac.ukazatKartyNaStole();
 
+            if (kartyNaStole.size() != 0) {
+                System.out.println("--- Na stole mas tieto karty: ---");
+                for (int i = 0; i < kartyNaStole.size(); i++) {
+                    System.out.println("     Karta " + (i + 1) + ": " + kartyNaStole.get(i).getMeno());
+                }
+            } else {
+                System.out.println("--- Na stole nemas ziadne karty. ---");
+            }
+            System.out.println("--- Na ruke mas tieto karty: ---");
+            for (int i = 0; i < vsetkyKartyNaRuke.size(); i++) {
+                System.out.println("     Karta " + (i + 1) + ": " + vsetkyKartyNaRuke.get(i).getMeno());
+            }
+
             if (hracieKarty.size() != 0 && pokracovat != 0) {
-                if (kartyNaStole.size() != 0) {
-                    System.out.println("--- Na stole mas tieto karty: ---");
-                    for (int i = 0; i < kartyNaStole.size(); i++) {
-                        System.out.println("     Karta " + (i + 1) + ": " + kartyNaStole.get(i).getMeno());
-                    }
-                } else {
-                    System.out.println("--- Na stole nemas ziadne karty. ---");
-                }
-                System.out.println("--- Na ruke mas tieto karty: ---");
-                for (int i = 0; i < vsetkyKartyNaRuke.size(); i++) {
-                    System.out.println("     Karta " + (i + 1) + ": " + vsetkyKartyNaRuke.get(i).getMeno());
-                }
                 pokracovat = this.zahrajKartu(hracieKarty, aktivnyHrac);
             } else {
                 if (hracieKarty.size() == 0) {
@@ -120,7 +132,9 @@ public class Bang {
         if (cisloKarty != 0) {
             cisloKarty--;
             hracieKarty.get(cisloKarty).zahrajKartu(aktivnyHrac, hraci);
-            aktivnyHrac.odstranitKartuZRuky(this.stol.kartaDoOdhadzovaciehoBalika(hracieKarty.get(cisloKarty)));
+            if (!(hracieKarty.get(cisloKarty) instanceof Dynamit) && !(hracieKarty.get(cisloKarty) instanceof Barrel)) {
+                aktivnyHrac.odstranitKartuZRuky(this.stol.kartaDoOdhadzovaciehoBalika(hracieKarty.get(cisloKarty)));
+            }
             cisloKarty++;
         }
         return cisloKarty;

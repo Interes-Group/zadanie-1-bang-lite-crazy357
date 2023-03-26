@@ -35,6 +35,9 @@ public class Stol {
         balicek.add(new Barrel(this));
         balicek.add(new Barrel(this));
         balicek.add(new Dynamit(this));
+        balicek.add(new Vazenie(this));
+        balicek.add(new Vazenie(this));
+        balicek.add(new Vazenie(this));
 
         Collections.shuffle(this.balicek);
 
@@ -94,5 +97,9 @@ public class Stol {
 
     public void kartyDoOdhadzovaciehoBalika(ArrayList<Karta> karty) {
         odhadzovaciBalicek.addAll(karty);
+    }
+
+    public void vazenieDoOdhadzovacieho() {
+        odhadzovaciBalicek.add(new Vazenie(this));
     }
 }

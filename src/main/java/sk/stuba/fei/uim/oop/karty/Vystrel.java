@@ -22,7 +22,7 @@ public class Vystrel extends Karta {
     public void zahrajKartu(Hrac hrac, Hrac[] hraci) {
         super.zahrajKartu(hrac, hraci);
         Hrac ciel = this.vybratHraca(hraci, hrac);
-        int zivotDole = 0;
+        int zivotDole;
         if (ciel.skontrolovatBarrel(ciel)) {
             zivotDole = (int) (Math.random() * 5);
             if (zivotDole == 0) {
@@ -53,7 +53,7 @@ public class Vystrel extends Karta {
         for (int i = 0; i < zijuciHraci.size(); i++) {
             System.out.println("     Hrac " + (i + 1) + ": " + zijuciHraci.get(i).getMeno() + ". Pocet zivotov: " + zijuciHraci.get(i).getZivoty());
         }
-        int cisloHraca = 0;
+        int cisloHraca;
         while (true) {
             cisloHraca = ZKlavesnice.readInt("--- Vyber cislo hraca, na ktoreho chces pouzit kartu: ---") - 1;
             if (cisloHraca < 0 || cisloHraca > zijuciHraci.size() - 1) {

@@ -10,7 +10,7 @@ public class Hrac {
     private int zivoty;
     private ArrayList<Karta> kartyNaRuke;
     private ArrayList<Karta> kartyNaStole;
-    protected Stol stol;
+    private Stol stol;
 
     public Hrac(String meno) {
         this.kartyNaRuke = new ArrayList<>();
@@ -159,6 +159,7 @@ public class Hrac {
             }
             hrac.odstranitKartuZoStola(karta);
             hrac.stol.kartaDoOdhadzovaciehoBalika(karta);
+            System.out.println("--- Aktualne mas " + hrac.getZivoty() + " zivotov. ---");
         }
     }
 
@@ -189,5 +190,42 @@ public class Hrac {
             }
         }
         return 0;
+    }
+
+    public int skontrolovatVazenie() {
+        for (Karta karta : this.kartyNaStole) {
+            if (karta instanceof Vazenie) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    public void vylozitVazenieNaStol() {
+        this.ukazatKartyNaStole().add(new Vazenie(stol));
+    }
+
+    public int skontrolovatEfektVazenia(Hrac hrac) {
+        System.out.println("--- Kontrola efektu vazenia: ---");
+        Karta karta = null;
+        for (Karta hodnota : hrac.kartyNaStole) {
+            if (hodnota instanceof Vazenie) {
+                karta = hodnota;
+                break;
+            }
+        }
+        int utek = 0;
+        int uspesnost = (int) (Math.random() * 5);
+        if (uspesnost != 0) {
+            System.out.println("--- Nepodarilo sa ti uniknut z vazenia, vynechavas tah. ---\n");
+            hrac.odstranitKartuZoStola(karta);
+            hrac.stol.kartaDoOdhadzovaciehoBalika(karta);
+        } else {
+            System.out.println("--- Podarilo sa ti uniknut z vazenia. Pokracuj vo svojom tahu. ---\n");
+            hrac.odstranitKartuZoStola(karta);
+            hrac.stol.vazenieDoOdhadzovacieho();
+            utek = 1;
+        }
+        return utek;
     }
 }
