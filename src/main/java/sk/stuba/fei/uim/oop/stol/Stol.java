@@ -22,7 +22,6 @@ public class Stol {
         }
         for (int i = 0; i < 8; i++) {
             balicek.add(new Pivo(this));
-            balicek.add(new Barrel(this));
         }
         balicek.add(new Indiani(this));
         balicek.add(new Indiani(this));
@@ -43,24 +42,52 @@ public class Stol {
             hrac.setKarty(noveKarty);
         }
     }
+
+    public int getPocetKarietVBalicku() {
+        return this.balicek.size();
+    }
+
+    public int getPocetKarietVOdhadzovacom() {
+        return this.odhadzovaciBalicek.size();
+    }
+
     public void premiesatBalicek() {
         Collections.shuffle(this.odhadzovaciBalicek);
         this.balicek.addAll(this.odhadzovaciBalicek);
         odhadzovaciBalicek.clear();
     }
+
     public ArrayList<Karta> potiahniKarty() {
         ArrayList<Karta> karty = new ArrayList<>();
-        if (this.balicek.size() < 2) {
-           this.premiesatBalicek();
+        if (this.balicek.size() == 1 && this.odhadzovaciBalicek.size() == 1) {
+            this.premiesatBalicek();
+            karty.add(balicek.remove(0));
+            karty.add(balicek.remove(0));
+            System.out.println("--- Potiahol si si dve karty. ---");
+        } else {
+            if (this.balicek.size() >= 2) {
+                karty.add(balicek.remove(0));
+                karty.add(balicek.remove(0));
+                System.out.println("--- Potiahol si si dve karty. ---");
+            } else {
+                if (this.odhadzovaciBalicek.size() < 2) {
+                    System.out.println("=== V balicku uz nie su ziadne karty. ===");
+                } else {
+                    this.premiesatBalicek();
+                    karty.add(balicek.remove(0));
+                    karty.add(balicek.remove(0));
+                    System.out.println("--- Potiahol si si dve karty. ---");
+                }
+            }
         }
-        karty.add(balicek.remove(0));
-        karty.add(balicek.remove(0));
         return karty;
     }
+
     public Karta kartaDoOdhadzovaciehoBalika(Karta karta) {
         odhadzovaciBalicek.add(karta);
         return karta;
     }
+
     public void kartyDoOdhadzovaciehoBalika(ArrayList<Karta> karty) {
         odhadzovaciBalicek.addAll(karty);
     }

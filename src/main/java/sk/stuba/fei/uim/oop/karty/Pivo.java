@@ -4,7 +4,7 @@ import sk.stuba.fei.uim.oop.hrac.Hrac;
 import sk.stuba.fei.uim.oop.stol.Stol;
 
 public class Pivo extends Karta {
-    private static final String  MENO_KARTY = "Pivo";
+    private static final String MENO_KARTY = "Pivo";
 
     public Pivo(Stol stol) {
         super(MENO_KARTY, stol);

@@ -25,9 +25,11 @@ public class Hrac {
     public String getMeno() {
         return meno;
     }
+
     public int getZivoty() {
         return zivoty;
     }
+
     public int skontrolovatVedla(Hrac ciel) {
         int podariloSa = 1;
         for (Karta karta : ciel.kartyNaRuke) {
@@ -43,20 +45,27 @@ public class Hrac {
         }
         return podariloSa;
     }
+
     public void pridatZivot() {
         this.zivoty++;
     }
+
     public void setKarty(ArrayList<Karta> noveKarty) {
         this.kartyNaRuke = noveKarty;
     }
-    public boolean jeAktivny() { return this.zivoty > 0;
+
+    public boolean jeAktivny() {
+        return this.zivoty > 0;
     }
+
     public ArrayList<Karta> ukazatKartyNaRuke() {
         return this.kartyNaRuke;
     }
+
     public ArrayList<Karta> ukazatKartyNaStole() {
         return this.kartyNaStole;
     }
+
     public ArrayList<Karta> ukazatHracieKarty() {
         ArrayList<Karta> karty = new ArrayList<>();
         for (Karta karta : this.kartyNaRuke) {
@@ -66,23 +75,28 @@ public class Hrac {
         }
         return karty;
     }
+
     public void potiahniDveKarty(ArrayList<Karta> potiahniKarty) {
-        this.kartyNaRuke.add(potiahniKarty.get(0));
-        this.kartyNaRuke.add(potiahniKarty.get(1));
+        this.kartyNaRuke.addAll(potiahniKarty);
     }
+
     public void odstranitKartuZRuky(Karta karta) {
         this.kartyNaRuke.remove(karta);
     }
+
     public void odstranitPrebytocneKarty(Stol stol) {
-        int pocetKarietNaOdstranenie = this.kartyNaRuke.size()-this.getZivoty();
+        int pocetKarietNaOdstranenie = this.kartyNaRuke.size() - this.getZivoty();
         for (int i = 0; i < pocetKarietNaOdstranenie; i++) {
-            Karta karta = this.kartyNaRuke.get((int) (Math.random()*this.kartyNaRuke.size()));
+            Karta karta = this.kartyNaRuke.get((int) (Math.random() * this.kartyNaRuke.size()));
             this.odstranitKartuZRuky(karta);
             this.stol = stol;
             this.stol.kartaDoOdhadzovaciehoBalika(karta);
             System.out.println("--- Odstranena prebytocna karta: " + karta.getMeno() + " ---");
+
         }
+        System.out.println("==================================================");
     }
+
     public void odstranitKarty() {
         ArrayList<Karta> kartyDoBalicka = new ArrayList<>();
         kartyDoBalicka.addAll(this.kartyNaStole);
@@ -93,6 +107,7 @@ public class Hrac {
             this.stol.kartyDoOdhadzovaciehoBalika(kartyDoBalicka);
         }
     }
+
     public int skontrolovatBang(Hrac hrac) {
         int trafil = 1;
         for (Karta karta : hrac.kartyNaRuke) {
@@ -109,14 +124,16 @@ public class Hrac {
         }
         return trafil;
     }
+
     public boolean skontrolovatBarrel(Hrac hrac) {
-        for (Karta karta : hrac.kartyNaStole){
-            if (karta instanceof Barrel){
+        for (Karta karta : hrac.kartyNaStole) {
+            if (karta instanceof Barrel) {
                 return true;
             }
         }
         return false;
     }
+
     public void vylozitBarrelNaStol(Hrac hrac) {
         for (Karta karta : hrac.kartyNaRuke) {
             if (karta instanceof Barrel) {
